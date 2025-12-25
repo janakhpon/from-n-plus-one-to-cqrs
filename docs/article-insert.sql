@@ -1,0 +1,3 @@
+INSERT INTO vlogs (id, title, description, tags, repo_url, preview_image, year, created_at)
+VALUES
+('2025-001', 'CQRS, N+1, Normalized and/or Denormalized Database Schema?', 'Understanding database optimization patterns: N+1 queries, normalization vs denormalization, batch querying, projections, caching, and CQRS. A practical guide with examples in Next.js and Drizzle ORM.', ARRAY['database', 'sql', 'performance', 'optimization', 'cqrs', 'n+1', 'normalization', 'denormalization', 'nextjs', 'drizzle-orm', 'postgresql', 'typescript'], 'https://github.com/janakhpon/from-n-plus-one-to-cqrs', 'https://qqhwkbyetpczholpibjh.supabase.co/storage/v1/object/public/vlogs/175500895750.webp', 2025, '2025-12-25T00:00:00Z');
