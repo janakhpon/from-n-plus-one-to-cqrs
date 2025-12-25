@@ -1,4 +1,4 @@
-# Database Optimization Examples
+# Normalized, Denormalized, N + 1 to CQRS?
 
 A demo immplementation demonstrating N+1 queries, batch querying, normalization, denormalization, projections, caching, and CQRS patterns.
 

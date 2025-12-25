@@ -1,5 +1,6 @@
 {
   "name": "from-n-plus-one-to-cqrs",
+  "description": "A demo immplementation demonstrating N+1 queries, batch querying, normalization, denormalization, projections, caching, and CQRS patterns.",
   "version": "0.1.0",
   "private": true,
   "engines": {
