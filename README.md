@@ -1,16 +1,18 @@
-# Normalized, Denormalized, N + 1 to CQRS?
+### Normalized, Denormalized, N + 1 to CQRS?
 
-A demo immplementation demonstrating N+1 queries, batch querying, normalization, denormalization, projections, caching, and CQRS patterns.
+A demo implementation demonstrating N+1 queries, batch querying, normalization, denormalization, projections, caching, and CQRS patterns.
 
-## Setup
+![Database optimization: N+1, CQRS, Batching, Normalization, Denormalization](./docs/images/preview.webp)
 
-1. **Install dependencies**
+**Setup**
+
+1. Install dependencies
 
    ```bash
    pnpm install
    ```
 
-2. **Configure environment**
+2. Configure environment
 
    ```bash
    cp env.example .env
@@ -18,48 +20,51 @@ A demo immplementation demonstrating N+1 queries, batch querying, normalization,
 
    Update `.env` with your database credentials.
 
-3. **Start services**
+3. Start services
 
    ```bash
    docker compose up -d
    ```
 
-4. **Run migrations**
+4. Run migrations
 
    ```bash
    pnpm db:push
    ```
 
-5. **Seed database**
+5. Seed database
 
    ```bash
    pnpm db:seed
    ```
 
-6. **Build projection table**
+6. Build projection table
 
    ```bash
-   # via api endpoint
    curl -X POST http://localhost:3000/api/project
+   ```
 
-   # or in code
+   Or in code:
+
+   ```ts
    import { runFullProjection } from "@/jobs/projection-full";
    await runFullProjection();
    ```
 
-7. **Start dev server**
+7. Start dev server
+
    ```bash
    pnpm dev
    ```
 
-## Examples
+**Examples**
 
 - `/nplusone` - N+1 query problem demonstration
 - `/nplusoneresolved` - Batch querying solution
 - `/denormalized` - Denormalized read model
-- `/optimzed` - ISR + Redis caching
+- `/optimized` - ISR + Redis caching
 
-## Scripts
+**Scripts**
 
 - `pnpm db:generate` - Generate migration files
 - `pnpm db:push` - Push schema to database (dev)
@@ -67,9 +72,11 @@ A demo immplementation demonstrating N+1 queries, batch querying, normalization,
 - `pnpm db:seed` - Seed database with sample data
 - `pnpm db:studio` - Open Drizzle Studio
 
-## Projection
+**Projection**
 
-The projection table (`deposts`) is built from normalized tables. Trigger it via:
+The projection table (`deposts`) is built from normalized tables. Trigger it via the API endpoint `POST /api/project` or import and call `runFullProjection()` directly.
 
-- API endpoint: `POST /api/project`
-- Or import and call `runFullProjection()` directly
+**Documentation**
+
+- [Read part 1](./docs/part1.md) - Understanding N+1, normalization, denormalization, and CQRS
+- [Read part 2](./docs/part2.md) - Hands-on example in Next.js with walkthrough
