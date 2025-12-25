@@ -169,7 +169,7 @@ This grows linearly with data, which is terrible for scalability.
 
 **"But my ORM code looks clean!"**
 
-Yep — that's the trap.
+Yep, that's the trap.
 
 Prisma example:
 
