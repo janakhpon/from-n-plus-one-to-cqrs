@@ -17,22 +17,22 @@ Let's look at the "wrong" way first. This is where most developers start, and wh
 
 In `/src/app/nplusone/page.tsx`, the code looks clean, but it's a trap:
 
-```tsx: /src/app/nplusone/page.tsx
-  // 1 query to fetch posts
-  const allPosts = await db.select().from(posts).limit(10);
+```ts
+// 1 query to fetch posts
+const allPosts = await db.select().from(posts).limit(10);
 
-  const result = [];
+const result = [];
 
-  for (const post of allPosts) {
-    // N queries to fetch tags PER post
-    const postTagsRows = await db
-      .select({ id: tags.id, name: tags.name })
-      .from(postTags)
-      .leftJoin(tags, eq(postTags.tagId, tags.id))
-      .where(eq(postTags.postId, post.id));
+for (const post of allPosts) {
+  // N queries to fetch tags PER post
+  const postTagsRows = await db
+    .select({ id: tags.id, name: tags.name })
+    .from(postTags)
+    .leftJoin(tags, eq(postTags.tagId, tags.id))
+    .where(eq(postTags.postId, post.id));
 
-    result.push({ ...post, tags: postTagsRows });
-  }
+  result.push({ ...post, tags: postTagsRows });
+}
 ```
 
 **"But it's only 10 posts!"**
@@ -51,7 +51,7 @@ The solution is simple: **Batching**. Stop asking for tags one by one. Ask for a
 
 In `/src/app/nplusoneresolved/page.tsx`:
 
-```tsx: /src/app/nplusoneresolved/page.tsx
+```ts
 // 1. Fetch posts (1 query)
 const allPosts = await db.select().from(posts).limit(10);
 const postIds = allPosts.map((p) => p.id);
@@ -79,7 +79,7 @@ Sometimes, batching isn't enough. When you have 5+ JOINs, query complexity start
 
 **Denormalization** is about trading storage for speed. We precompute the data and store it in a single table that matches exactly what the UI needs.
 
-```tsx: /src/app/denormalized/page.tsx
+```ts
 // Single query. No joins. No batching. No pain.
 const posts = await db
   .select()
@@ -98,7 +98,7 @@ Why hit the database _at all_ for data that doesn't change every second?
 
 **ISR (Incremental Static Regeneration)** acts as a shield. It serves pre-rendered HTML from the edge, only hitting your DB once in a blue moon to refresh the data.
 
-```tsx: /src/app/optimized/page.tsx
+```ts
 export const revalidate = 60; // Refresh every 60 seconds
 ```
 
