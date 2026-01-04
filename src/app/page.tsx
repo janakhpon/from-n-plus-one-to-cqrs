@@ -3,64 +3,83 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-black p-8">
-      <main className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-black dark:text-zinc-50">
-          Database Optimization Examples
-        </h1>
-        <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-8">
-          Hands-on examples demonstrating N+1 queries, batch querying,
-          denormalization, projections, caching, and CQRS patterns.
-        </p>
+      <main className="max-w-4xl mx-auto py-12 px-6">
+        <div className="mb-12">
+          <h1 className="text-5xl font-extrabold mb-4 text-zinc-900 tracking-tight">
+            Database Optimization{' '}
+            <span className="text-blue-600">Walkthrough</span>
+          </h1>
+          <p className="text-xl text-zinc-600 max-w-2xl leading-relaxed">
+            Hands-on examples demonstrating N+1 queries, batch fetching,
+            denormalization, projections, and high-performance caching patterns.
+          </p>
+        </div>
 
-        <div className="grid gap-4">
+        <div className="grid gap-6">
           <Link
             href="/nplusone"
-            className="p-6 border rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+            className="group p-8 bg-white border border-zinc-200 rounded-2xl hover:border-zinc-300 hover:shadow-md transition-all"
           >
-            <h2 className="text-2xl font-semibold mb-2 text-black dark:text-zinc-50">
+            <h2 className="text-2xl font-bold mb-2 text-zinc-900 group-hover:text-blue-600 transition-colors">
               1. N+1 Query Problem
             </h2>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Demonstrates the classic N+1 query problem with posts and tags.
+            <p className="text-zinc-600">
+              The classic performance bottleneck: fetching related data one by
+              one.
             </p>
           </Link>
 
           <Link
             href="/nplusoneresolved"
-            className="p-6 border rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+            className="group p-8 bg-white border border-zinc-200 rounded-2xl hover:border-zinc-300 hover:shadow-md transition-all"
           >
-            <h2 className="text-2xl font-semibold mb-2 text-black dark:text-zinc-50">
+            <h2 className="text-2xl font-bold mb-2 text-zinc-900 group-hover:text-emerald-600 transition-colors">
               2. N+1 Resolved (Batch Querying)
             </h2>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Same functionality, but using batch querying and in-memory merging
-              to eliminate N+1.
+            <p className="text-zinc-600">
+              Fixing N+1 by batching requests and merging data in-memory.
             </p>
           </Link>
 
           <Link
             href="/denormalized"
-            className="p-6 border rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+            className="group p-8 bg-white border border-zinc-200 rounded-2xl hover:border-zinc-300 hover:shadow-md transition-all"
           >
-            <h2 className="text-2xl font-semibold mb-2 text-black dark:text-zinc-50">
+            <h2 className="text-2xl font-bold mb-2 text-zinc-900 group-hover:text-amber-600 transition-colors">
               3. Denormalized Read Model
             </h2>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Using a projection table (denormalized) for fast reads with a
-              single query.
+            <p className="text-zinc-600">
+              Using a pre-computed projection table for ultra-fast single-query
+              reads.
             </p>
           </Link>
 
           <Link
-            href="/optimzed"
-            className="p-6 border rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
+            href="/optimized"
+            className="group p-8 bg-white border border-zinc-200 rounded-2xl hover:border-zinc-300 hover:shadow-md transition-all"
           >
-            <h2 className="text-2xl font-semibold mb-2 text-black dark:text-zinc-50">
+            <h2 className="text-2xl font-bold mb-2 text-zinc-900 group-hover:text-purple-600 transition-colors">
               4. Optimized (ISR + Cache)
             </h2>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Combining ISR (Incremental Static Regeneration) with Redis caching
-              for optimal performance.
+            <p className="text-zinc-600">
+              Combining Next.js ISR with Redis for a balance of speed and
+              freshness.
+            </p>
+          </Link>
+
+          <Link
+            href="/apioptimized"
+            className="group p-8 bg-white border-2 border-blue-100 rounded-2xl hover:border-blue-200 hover:shadow-md transition-all relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 px-4 py-1 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest">
+              Advanced
+            </div>
+            <h2 className="text-2xl font-bold mb-2 text-zinc-900 group-hover:text-blue-700 transition-colors">
+              5. API Optimized
+            </h2>
+            <p className="text-zinc-600">
+              Robust serverless API pattern with Redis caching and DB retry
+              logic.
             </p>
           </Link>
         </div>
