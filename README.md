@@ -1,82 +1,65 @@
-### Normalized, Denormalized, N + 1 to CQRS?
+# From N+1 to CQRS: A Database Optimization Journey
 
-A demo implementation demonstrating N+1 queries, batch querying, normalization, denormalization, projections, caching, and CQRS patterns.
+Normalized? Denormalized? Projection Builder? Why does it all feel like a confusing maze?
+
+This repository is a hands-on lab designed to take you from the "Pain" of inefficient N+1 queries to the "Peace" of optimized read models and high-performance caching.
 
 ![Database optimization: N+1, CQRS, Batching, Normalization, Denormalization](./docs/images/preview.webp)
 
-**Setup**
+## 🚀 Quick Start
 
-1. Install dependencies
+Get the lab running in less than 2 minutes.
 
-   ```bash
-   pnpm install
-   ```
+### 1. Install Dependencies
 
-2. Configure environment
+```bash
+pnpm install
+```
 
-   ```bash
-   cp env.example .env
-   ```
+### 2. Configure Environment
 
-   Update `.env` with your database credentials.
+```bash
+cp .env.example .env
+```
 
-3. Start services
+> [!NOTE]
+> Update `.env` with your database credentials. If you're using the included docker-compose, the defaults will just work.
 
-   ```bash
-   docker compose up -d
-   ```
+### 3. Start the Lab
 
-4. Run migrations
+```bash
+docker compose up -d   # Start Postgres & Redis
+pnpm db:push          # Push schema with Drizzle
+pnpm db:seed          # Populate with sample data
+pnpm dev              # Fire up the Next.js app
+```
 
-   ```bash
-   pnpm db:push
-   ```
+### 4. Build the Read Model
 
-5. Seed database
+```bash
+curl -X POST http://localhost:3000/api/project
+```
 
-   ```bash
-   pnpm db:seed
-   ```
+## What's Inside?
 
-6. Build projection table
+We've built a series of comparison pages so you can see the performance difference for yourself:
 
-   ```bash
-   curl -X POST http://localhost:3000/api/project
-   ```
+- `/nplusone` - **The Problem**: 1 + N queries. Watch your DB sweat.
+- `/nplusoneresolved` - **The Fix**: Batch fetching. 2 queries, total.
+- `/denormalized` - **The Cheat Code**: Single query reads from a pre-computed table.
+- `/optimized` - **The Shield**: Static regeneration with ISR.
+- `/apioptimized` - **The Resilience**: Serverless API pattern with Redis & Retries.
 
-   Or in code:
+## Tooling & Scripts
 
-   ```ts
-   import { runFullProjection } from "@/jobs/projection-full";
-   await runFullProjection();
-   ```
+- `pnpm db:generate` - Generate Drizzle migration files
+- `pnpm db:push` - Sync schema directly (dev)
+- `pnpm db:seed` - Seed with fresh sample data
+- `pnpm db:studio` - Inspect your data via Drizzle Studio
 
-7. Start dev server
+## Deep Dive (Read the Guide)
 
-   ```bash
-   pnpm dev
-   ```
+Don't just run the code—understand the "Why."
 
-**Examples**
-
-- `/nplusone` - N+1 query problem demonstration
-- `/nplusoneresolved` - Batch querying solution
-- `/denormalized` - Denormalized read model
-- `/optimized` - ISR + Redis caching
-
-**Scripts**
-
-- `pnpm db:generate` - Generate migration files
-- `pnpm db:push` - Push schema to database (dev)
-- `pnpm db:migrate` - Run migrations (prod)
-- `pnpm db:seed` - Seed database with sample data
-- `pnpm db:studio` - Open Drizzle Studio
-
-**Projection**
-
-The projection table (`deposts`) is built from normalized tables. Trigger it via the API endpoint `POST /api/project` or import and call `runFullProjection()` directly.
-
-**Documentation**
-
-- [Read part 1](./docs/part1.md) - Understanding N+1, normalization, denormalization, and CQRS
-- [Read part 2](./docs/part2.md) - Hands-on example in Next.js with walkthrough
+1. [**Part 1: The Theory**](./docs/part1.md) - Understanding N+1, the value of Normalization vs Denormalization, and when to use CQRS.
+2. [**Part 2: The Hands-on**](./docs/part2.md) - A step-by-step walkthrough of the implementation details of this repo.
